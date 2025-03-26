@@ -19,7 +19,7 @@ const MannyCardCard = (props) => {
     return (
         <div className={classes.card}>
             <Typography variant="h2">
-                Hello MannyCard World
+                Hello World, this is from a CI/CD pipeline!
             </Typography>
             <Typography>
                 <span>
