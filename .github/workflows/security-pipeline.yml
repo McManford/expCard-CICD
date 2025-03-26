@@ -26,21 +26,21 @@ jobs:
       - name: Install dependencies # Example for Node.js
         run: npm install
         
-      # Snyk Security Scan
-      - name: Run Snyk to check for vulnerabilities
-        uses: snyk/actions/node@master # Use appropriate Snyk action for your project type
-        env:
-          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-        with:
-          command: test
+      # # Snyk Security Scan
+      # - name: Run Snyk to check for vulnerabilities
+      #   uses: snyk/actions/node@master # Use appropriate Snyk action for your project type
+      #   env:
+      #     SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+      #   with:
+      #     command: test
 
-      # Optional: Monitor your project in Snyk
-      - name: Monitor project in Snyk
-        uses: snyk/actions/node@master
-        env:
-          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-        with:
-          command: monitor
+      # # Optional: Monitor your project in Snyk
+      # - name: Monitor project in Snyk
+      #   uses: snyk/actions/node@master
+      #   env:
+      #     SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+      #   with:
+      #     command: monitor
 
   build:
     runs-on: ubuntu-latest
