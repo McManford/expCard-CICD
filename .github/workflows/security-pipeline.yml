@@ -1,0 +1,68 @@
+name: Security Pipeline
+
+on:
+  push:
+    branches: 
+      - "main"  # Trigger the workflow for pushes to the main branch
+      - "dev"   # Trigger the workflow for pushes to the dev branch
+  pull_request:
+    branches: 
+      - "main"  # Trigger on pull requests to the main branch
+  schedule:
+    - cron: '0 0 * * 0'  # Run weekly on Sundays
+
+jobs:
+  security:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      
+      # Set up your project's specific environment
+      - name: Set up Node.js # Example for Node.js project
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+
+      - name: Install dependencies # Example for Node.js
+        run: npm install
+        
+      # Snyk Security Scan
+      - name: Run Snyk to check for vulnerabilities
+        uses: snyk/actions/node@master # Use appropriate Snyk action for your project type
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        with:
+          command: test
+
+      # Optional: Monitor your project in Snyk
+      - name: Monitor project in Snyk
+        uses: snyk/actions/node@master
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        with:
+          command: monitor
+
+  build:
+    runs-on: ubuntu-latest
+    needs: security  # Ensure the security job completes before this job starts
+    if: github.ref == 'refs/heads/main'  # Only run on pushes to the main branch
+    steps:
+      - uses: actions/checkout@v3
+
+      # Set up your project's specific environment
+      - name: Set up Node.js # Example for Node.js project
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          
+      - name: Install dependencies # Example for Node.js
+        run: npm install
+        
+      # Build step
+      - name: Build
+        env:
+          EXPERIENCE_EXTENSION_UPLOAD_TOKEN: ${{ secrets.EXPERIENCE_EXTENSION_UPLOAD_TOKEN }}
+        run: npm run deploy-dev --env forceUpload 
+        
+      # Adjust according to your build command
+      # Deploy steps would go here (if applicable)
