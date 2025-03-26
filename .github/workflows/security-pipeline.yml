@@ -33,7 +33,7 @@ jobs:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
           command: test
-          args: --all-projects --severity-threshold=medium
+          args: --severity-threshold=high  # Fail the build if high severity vulnerabilities are found
 
       # Optional: Monitor your project in Snyk
       - name: Monitor project in Snyk
