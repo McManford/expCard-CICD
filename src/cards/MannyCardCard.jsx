@@ -19,14 +19,14 @@ const MannyCardCard = (props) => {
     return (
         <div className={classes.card}>
             <Typography variant="h2">
-                Hello World, this is a broken pipeline!
+                Hello World, this is a fixed pipeline!
             </Typography>
             <Typography>
                 <span>
-                    For sample extensions, visit the Ellucian Developer
+                    For sample extensions, visit the Ellucian Developer GitHub repository: 
                 </span>
                 <TextLink href="https://github.com/ellucian-developer/experience-extension-sdk-samples" target="_blank">
-                     GitHub
+                    GitHub
                 </TextLink>
             </Typography>
         </div>
